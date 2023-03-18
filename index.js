@@ -1,3 +1,6 @@
+const divPlayer = document.getElementById("player-score");
+const divComputer = document.getElementById("computer-score");
+
 function getComputerChoice() {
     let numberChosed = Math.floor(Math.random() * 3)
     let choice = ""
@@ -13,36 +16,43 @@ function getComputerChoice() {
     return choice
 }
 
-function playRound() {
-    let playerSelection = prompt("rock, paper or scissors?")
-    let computerSelection = getComputerChoice();
-    let playButton = document.getElementById("play")
+var computerScore = 0;
+var playerScore = 0;
 
-    if(playerSelection.toLowerCase() == computerSelection){
-        console.log("Draw")
-        playButton.style.backgroundColor = "yellow"
-    } else if(playerSelection.toLowerCase() == "rock" && computerSelection == "paper") {
-        console.log("You lose")
-        playButton.style.backgroundColor = "red"
-    } else if(playerSelection.toLowerCase() == "paper" && computerSelection == "rock") {
-        console.log("You won")
-        playButton.style.backgroundColor = "green"
-    } else if(playerSelection.toLowerCase() == "rock" && computerSelection == "scissors") {
-        console.log("You won")
-        playButton.style.backgroundColor = "green"
-    } else if(playerSelection.toLowerCase() == "paper" && computerSelection == "scissors") {
-        console.log("You lose")
-        playButton.style.backgroundColor = "red"
-    } else if(playerSelection.toLowerCase() == "scissors" && computerSelection == "rock") {
-        console.log("You lose")
-        playButton.style.backgroundColor = "red"
-    } else if(playerSelection.toLowerCase() == "scissors" && computerSelection == "paper") {
-        console.log("You won")
-        playButton.style.backgroundColor = "green"
-    } else {
-        console.log("You have to select between rock, paper or scissors.")
-        playButton.style.backgroundColor = "gray"
+function playRound(playerSelection) {
+    var computerSelection = getComputerChoice();
+    
+    if(playerSelection == computerSelection) {
+        computerScore++
+        playerScore++
+    } else if(playerSelection == "rock" && computerSelection == "paper") {
+        computerScore++
+    } else if(playerSelection == "rock" && computerSelection == "scissors") {
+        playerScore++
+    } else if(playerSelection == "paper" && computerSelection == "rock") {
+        playerScore++
+    } else if(playerSelection == "paper" && computerSelection == "scissors") {
+        computerScore++
+    } else if(playerSelection == "scissors" && computerSelection == "rock") {
+        computerScore++
+    } else if(playerSelection == "scissors" && computerSelection == "paper") {
+        playerScore++
     }
+
+    if(playerScore >= 5 && computerScore >= 5) {
+        alert("Draw")
+        playerScore = 0
+        computerScore = 0
+    } else if (playerScore >= 5) {
+        alert("You won")
+        playerScore = 0
+        computerScore = 0
+    } else if (computerScore >= 5) {
+        alert("You lost")
+        playerScore = 0
+        computerScore = 0
+    }
+
+    divPlayer.innerHTML = playerScore;
+    divComputer.innerHTML = computerScore;
 }
-
-
